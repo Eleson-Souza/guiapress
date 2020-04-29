@@ -1,0 +1,25 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+    <%- include('../../partials/navbar.ejs') %>
+
+    <div class="container mt-3">
+        <h2>Listagem de usuários</h2>
+        <a href="/admin/users/new" class="btn btn-success">Criar novo usuário</a>
+
+        <table class="table table-bordered mt-4">
+            <thead class="bg-dark text-light">
+                <th>ID</th>
+                <th>E-mail</th>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                    <tr>
+                        <td><%= user.id %></td>
+                        <td><%= user.email %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+<%- include('../../partials/footer.ejs') %>

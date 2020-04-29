@@ -1,0 +1,43 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+    <%- include('../../partials/navbar.ejs') %>
+    <div class="container">
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <h2>Edição de Artigo</h2>
+            </div>        
+            <div class="card-body">
+                <form method="POST" action="/admin/article/update">
+                    <input type="hidden" name="id" value="<%= article.id %>">
+                    <input type="text" name="title" id="title" placeholder="Defina o título do artigo" class="form-control mb-3" value="<%= article.title %>">
+                    <textarea name="body" id="article" placeholder="Escreva o artigo aqui" class="form-control mb-3"><%- article.body %></textarea> 
+                    <label for="category" class="mt-2">Categoria</label>
+                    <select name="category" id="category" class="form-control mb-3">
+                        <% categories.forEach(category => { %>
+                            <% if(category.id == article.categoryId) { %>
+                                <option selected value="<%= category.id %>"><%= category.title %></option>
+                            <% } else { %>
+                                <option value="<%= category.id %>"><%= category.title %></option>
+                            <% } %>
+                        <% }) %>
+                    </select>
+                    <button type="submit" class="btn btn-success">Atualizar</button>
+                </form>
+            </div>            
+        </div>
+    </div>
+</body>
+<%- include('../../partials/footer.ejs') %>
+
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    // Configuração do TinyMCE - Editor de texto.
+    tinymce.init({
+        language: 'pt_BR',
+        selector: '#article',
+        plugins: [
+            'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+        ] // Plugins - Adiciona funcionalidades ao editor.
+    });
+</script>

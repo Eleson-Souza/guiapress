@@ -1,0 +1,56 @@
+<%- include('../../partials/header.ejs') %>
+<style>
+    .action-width {
+        width: 173px;
+    }
+</style>
+<body>
+    <%- include('../../partials/navbar.ejs') %>
+    
+    <div class="container">
+        <hr>
+        <h2>Artigos</h2>
+        <a href="/admin/articles/new" class="btn btn-success">Criar novo artigo</a>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Slug</th>
+                    <th>Categoria</th>
+                    <th class="action-width">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% articles.forEach((article) => { %>
+                    <tr>
+                        <td><%= article.id %></td>
+                        <td><%= article.title %></td>
+                        <td><%= article.slug %></td>
+                        <td><%= article.category.title %></td>
+                        <td>
+                            <a href="/admin/article/edit/<%= article.id %>" class="btn btn-warning">Editar</a>
+
+                            <form method="POST" action="/articles/delete" style="display: inline-block;" onsubmit="confirmarDelecao(event, this)">
+                            <input type="hidden" name="id" id="id" value="<%= article.id %>">
+                                <button type="submit" class="btn btn-danger">Deletar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<%- include('../../partials/footer.ejs') %>
+<script>
+    function confirmarDelecao(event, form) {
+        event.preventDefault(); // Cancela o envio do formulário.
+        var decisao = confirm('Você tem certeza que deseja deletar este artigo?');
+        if(decisao) {
+            form.submit(); // Submete/Envia o formulário.
+        }
+    }
+</script>
